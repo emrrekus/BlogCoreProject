@@ -1,0 +1,22 @@
+﻿@model List<EntityLayer.Concrete.Category>
+@{
+    Layout = null;
+}
+
+<table class="table table-bordered">
+    <tr>
+        <th>ID</th>
+        <th>Kategori Adı</th>
+        <th>Açıklama</th>
+    </tr>
+
+    <tr>
+        @foreach(var item in Model)
+        {
+            <td>@item.CategoryId</td>
+            <td>@item.CategoryName</td>
+            <td>@item.Description</td>
+        }
+    </tr>
+
+</table>

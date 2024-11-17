@@ -18,7 +18,7 @@ namespace EntityLayer.Concrete
 
         public bool Status { get; set; }
 
-        public List<Article> Articles { get; set; }
+        public  List<Article> Articles { get; set; }
 
 
     }

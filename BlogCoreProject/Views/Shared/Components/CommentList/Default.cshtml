@@ -1,0 +1,26 @@
+﻿@model List<EntityLayer.Concrete.Comment>
+
+
+
+@foreach(var item in Model)
+{
+	<h1>@item.ArticleId</h1>
+}
+@* <div class="comment-top">
+	<h4>Yorumlar</h4>
+	<div class="media">
+		@foreach (var item in Model)
+		{
+			<img src="/web/images/t1.jpg" alt="" class="img-fluid" />
+			<div class="media-body">
+				<h5 class="mt-0">@item.Username</h5>
+				<p>
+					@item.Content
+				</p>
+
+
+			</div>
+		}
+
+	</div>
+</div> *@

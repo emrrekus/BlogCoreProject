@@ -19,6 +19,11 @@ namespace BusinessLayer.Concrete
             _articleDal = articleDal;
         }
 
+        public List<Article> GetBlogListWithCategory()
+        {
+            return _articleDal.GetListWithCategory();
+        }
+
         public void TDelete(int id)
         {
             _articleDal.Delete(id);
@@ -34,7 +39,7 @@ namespace BusinessLayer.Concrete
             return _articleDal.GetById(id);
         }
 
-        public List<Article> TGetListbyFilter()
+        public List<Article> TGetListbyFilter(int id)
         {
             throw new NotImplementedException();
         }

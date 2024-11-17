@@ -33,7 +33,7 @@ namespace BusinessLayer.Concrete
             return _writerDal.GetById(id);
         }
 
-        public List<Writer> TGetListbyFilter()
+        public List<Writer> TGetListbyFilter(int id)
         {
             throw new NotImplementedException();
         }

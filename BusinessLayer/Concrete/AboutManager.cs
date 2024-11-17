@@ -34,7 +34,7 @@ namespace BusinessLayer.Concrete
             return _aboutDal.GetById(id);
         }
 
-        public List<About> TGetListbyFilter()
+        public List<About> TGetListbyFilter(int id)
         {
             throw new NotImplementedException();
         }

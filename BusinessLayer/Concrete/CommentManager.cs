@@ -9,10 +9,16 @@ using System.Threading.Tasks;
 
 namespace BusinessLayer.Concrete
 {
-    public class CommentManager : ICommentService
+	public class CommentManager : ICommentService
     {
 
         private readonly ICommentDal _commentDal;
+
+        public CommentManager(ICommentDal commentDal)
+        {
+            _commentDal = commentDal;
+        }
+
         public void TDelete(int id)
         {
             _commentDal.Delete(id); 
@@ -28,9 +34,9 @@ namespace BusinessLayer.Concrete
             return _commentDal.GetById(id);
         }
 
-        public List<Comment> TGetListbyFilter()
+        public List<Comment> TGetListbyFilter(int id)
         {
-            throw new NotImplementedException();
+           return _commentDal.GetbyFilter(x=> x.ArticleId == id);
         }
 
         public void TInsert(Comment entity)

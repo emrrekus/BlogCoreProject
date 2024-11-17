@@ -1,0 +1,10 @@
+﻿@model List<EntityLayer.Concrete.Comment>
+@{
+    Layout = null;
+}
+
+
+@foreach(var item in Model)
+{
+    <h1>@item.Content</h1>
+}
