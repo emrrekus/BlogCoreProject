@@ -4,6 +4,7 @@ using DataAccessLayer.Concrete;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccessLayer.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20241118133721_mig9")]
+    partial class mig9
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -91,14 +93,9 @@ namespace DataAccessLayer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("WriterId")
-                        .HasColumnType("int");
-
                     b.HasKey("ArticleId");
 
                     b.HasIndex("CategoryId");
-
-                    b.HasIndex("WriterId");
 
                     b.ToTable("Articles");
                 });
@@ -198,44 +195,6 @@ namespace DataAccessLayer.Migrations
                     b.ToTable("Contacts");
                 });
 
-            modelBuilder.Entity("EntityLayer.Concrete.Writer", b =>
-                {
-                    b.Property<int>("WriterId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("WriterId"), 1L, 1);
-
-                    b.Property<string>("About")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Image")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Mail")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool?>("Status")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Surname")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("WriterPassword")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("WriterId");
-
-                    b.ToTable("Writers");
-                });
-
             modelBuilder.Entity("EntityLayer.Concrete.Article", b =>
                 {
                     b.HasOne("EntityLayer.Concrete.Category", "Category")
@@ -244,15 +203,7 @@ namespace DataAccessLayer.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("EntityLayer.Concrete.Writer", "Writer")
-                        .WithMany("Articles")
-                        .HasForeignKey("WriterId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Category");
-
-                    b.Navigation("Writer");
                 });
 
             modelBuilder.Entity("EntityLayer.Concrete.Comment", b =>
@@ -272,11 +223,6 @@ namespace DataAccessLayer.Migrations
                 });
 
             modelBuilder.Entity("EntityLayer.Concrete.Category", b =>
-                {
-                    b.Navigation("Articles");
-                });
-
-            modelBuilder.Entity("EntityLayer.Concrete.Writer", b =>
                 {
                     b.Navigation("Articles");
                 });

@@ -19,7 +19,12 @@ namespace BusinessLayer.Concrete
             _articleDal = articleDal;
         }
 
-        public List<Article> GetBlogListWithCategory()
+		public List<Article> GetArticleListByWriter(int id)
+		{
+			return _articleDal.GetbyFilter(x=> x.WriterId == id);
+		}
+
+		public List<Article> GetBlogListWithCategory()
         {
             return _articleDal.GetListWithCategory();
         }

@@ -10,5 +10,6 @@ namespace BusinessLayer.Abstract
     public interface IArticleService : IGenericService<Article>
     {
         List<Article> GetBlogListWithCategory();
+        List <Article> GetArticleListByWriter(int id);
     }
 }

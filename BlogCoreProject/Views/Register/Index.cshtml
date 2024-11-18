@@ -1,0 +1,71 @@
+﻿@model EntityLayer.Concrete.Writer
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_BlogLayout.cshtml";
+}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<section class="main-content-w3layouts-agileits">
+    <div class="container">
+        <h3 class="tittle">Kayıt Ol</h3>
+        <div class="inner-sec">
+            <div class="login p-5 bg-light mx-auto mw-100">
+                <form action="/Register/Index" method="post">
+                    <div class="form-row">
+                        <!-- Ad -->
+                        <div class="col-md-6 mb-3">
+                            <label for="validationCustom01">Ad</label>
+                            <input type="text" class="form-control" name="Name" placeholder="" value="@Model?.Name">
+                            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                        </div>
+
+                        <!-- Soyad -->
+                        <div class="col-md-6 mb-3">
+                            <label for="validationCustom02">Soyad</label>
+                            <input type="text" class="form-control" name="Surname" placeholder="" value="@Model?.Surname">
+                            @Html.ValidationMessageFor(model => model.Surname, "", new { @class = "text-danger" })
+                        </div>
+
+                        <!-- Mail -->
+                        <div class="col-md-6 mb-3">
+                            <label for="validationCustom03">Mail</label>
+                            <input type="email" class="form-control" name="Mail" placeholder="" value="@Model?.Mail">
+                            @Html.ValidationMessageFor(model => model.Mail, "", new { @class = "text-danger" })
+                        </div>
+
+                        <!-- Şifre -->
+                        <div class="col-md-6 mb-3">
+                            <label for="validationCustom04">Şifre</label>
+                            <input type="password" class="form-control" name="WriterPassword" placeholder="">
+                            @Html.ValidationMessageFor(model => model.WriterPassword, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <!-- Submit Butonu -->
+                    <button type="submit" class="btn btn-primary submit mb-4">Kayıt Ol</button>
+
+                    <!-- Şartlar -->
+                    <p>
+                        <a href="#" id="termsLink">Tüm şartları okudum, Kabul ediyorum.</a>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- SweetAlert Script -->
+<script>
+    // Link'e tıklandığında SweetAlert göster
+    document.getElementById("termsLink").addEventListener("click", function (event) {
+        event.preventDefault(); // Linkin varsayılan davranışını engelle
+        Swal.fire({
+            title: 'Bilgilendirme',
+            text: 'Şartları kabul ettim!',
+            icon: 'success',
+            confirmButtonText: 'Tamam'
+        });
+    });
+</script>

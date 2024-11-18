@@ -12,9 +12,9 @@ namespace BlogCoreProject.ViewComponents.Comment
 			this.commentService = commentService;
 		}
 
-		public IViewComponentResult Invoke()
+		public IViewComponentResult Invoke(int id)
 		{
-			var values = commentService.TGetListbyFilter(31);
+			var values = commentService.TGetListbyFilter(id);
 			return View(values);
 		}
 	}

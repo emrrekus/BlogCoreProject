@@ -3,11 +3,14 @@ using BusinessLayer.Concrete;
 using DataAccessLayer.Abstract;
 using DataAccessLayer.Concrete;
 using DataAccessLayer.EntityFramework;
+using FluentValidation;
 
 var builder = WebApplication.CreateBuilder(args);
-
+ValidatorOptions.Global.LanguageManager.Culture = new System.Globalization.CultureInfo("tr");
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+
 
 builder.Services.AddDbContext<Context>();
 

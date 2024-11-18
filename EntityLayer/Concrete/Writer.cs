@@ -14,10 +14,14 @@ namespace EntityLayer.Concrete
         public string Name { get; set; }
         public string Surname { get; set; }
         public string Mail { get; set; }
-        public int Password { get; set; }
-        public string About { get; set; }
-        public string Image { get; set; }
+        public string WriterPassword { get; set; }
+        public string? About { get; set; }
+        public string? Image { get; set; }
         
-        public bool Status { get; set; }
+        public bool? Status { get; set; }
+
+        public List<Article> Articles { get; set; }
+
+     
     }
 }
