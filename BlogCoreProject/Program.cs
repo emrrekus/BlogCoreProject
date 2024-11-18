@@ -4,6 +4,8 @@ using DataAccessLayer.Abstract;
 using DataAccessLayer.Concrete;
 using DataAccessLayer.EntityFramework;
 using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 ValidatorOptions.Global.LanguageManager.Culture = new System.Globalization.CultureInfo("tr");
@@ -26,6 +28,10 @@ builder.Services.AddScoped<IContactService, ContactManager>();
 builder.Services.AddScoped<IContactDal, EfContactDal>();
 builder.Services.AddScoped<IWriterService, WriterManager>();
 builder.Services.AddScoped<IWriterDal, EfWriterDal>();
+builder.Services.AddScoped<INewsLetterService, NewsLetterManager>();
+builder.Services.AddScoped<INewsLetterDal, EfNewsLetter>();
+
+
 
 var app = builder.Build();
 
@@ -37,11 +43,14 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+app.UseStatusCodePagesWithReExecute("/ErrorPage/Error404");
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
