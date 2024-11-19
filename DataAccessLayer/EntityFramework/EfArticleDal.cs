@@ -23,5 +23,15 @@ namespace DataAccessLayer.EntityFramework
         {
             return _context.Articles.Include(x => x.Category).ToList();
         }
+
+        public List<Article> GetListWithCategoryWithoutWriter(int id)
+        {
+           return _context.Articles.Include(_x => _x.Category).Where(x=>x.WriterId==id).ToList();
+        }
+
+        public List<Article> GetListWithoutWriter()
+        {
+            return _context.Articles.Include(x => x.Writer).ToList();
+        }
     }
 }

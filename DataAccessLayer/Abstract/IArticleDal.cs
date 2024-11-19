@@ -11,5 +11,8 @@ namespace DataAccessLayer.Abstract
     {
 
         List<Article> GetListWithCategory();
+        List<Article> GetListWithoutWriter();
+
+        List<Article> GetListWithCategoryWithoutWriter(int id);
     }
 }

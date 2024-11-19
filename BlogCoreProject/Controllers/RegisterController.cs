@@ -2,10 +2,12 @@
 using BusinessLayer.ValidationRules;
 using EntityLayer.Concrete;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BlogCoreProject.Controllers
 {
+	[AllowAnonymous]
 	public class RegisterController : Controller
 	{
 		private readonly IWriterService _writerService;

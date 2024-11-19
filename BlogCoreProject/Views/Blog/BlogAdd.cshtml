@@ -1,0 +1,99 @@
+﻿@model EntityLayer.Concrete.Article
+
+@{
+    ViewData["Title"] = "BlogAdd";
+    Layout = "~/Views/Shared/_WriterLayout.cshtml";
+}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+<h1 class="text-center my-4 fw-bold">Yeni Blog Ekle</h1>
+
+<div class="container bg-white p-5 rounded shadow">
+    <form asp-action="BlogAdd" method="post" enctype="multipart/form-data">
+        <div class="row mb-4">
+            <!-- Başlık -->
+            <div class="col-md-6">
+                <label for="Title" class="form-label fw-semibold">Başlık</label>
+                <input type="text" id="Title" name="Title" class="form-control" placeholder="Başlık giriniz" required>
+            </div>
+
+            <!-- Oluşturma Tarihi -->
+            <div class="col-md-6">
+                <label for="CreateDate" class="form-label fw-semibold">Oluşturma Tarihi</label>
+                <input type="date" id="CreateDate" name="CreateDate" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" readonly>
+            </div>
+        </div>
+
+        <!-- İçerik -->
+        <div class="mb-4">
+            <label for="Content" class="form-label fw-semibold">İçerik</label>
+            <textarea id="Content" name="Content" class="form-control" rows="5" placeholder="İçeriği buraya yazınız" required></textarea>
+        </div>
+
+        <div class="row mb-4">
+            <!-- Küçük Resim -->
+            <div class="col-md-6">
+                <label for="ThumbnailImage" class="form-label fw-semibold">Küçük Resim</label>
+                <input type="text" id="ThumbnailImage" name="ThumbnailImage" class="form-control">
+            </div>
+
+            <!-- Ana Resim -->
+            <div class="col-md-6">
+                <label for="Image" class="form-label fw-semibold">Ana Resim</label>
+                <input type="text" id="Image" name="Image" class="form-control">
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            <!-- Kategori -->
+            <div class="col-md-6">
+                <label for="CategoryId" class="form-label fw-semibold text-primary">Kategori</label>
+                <div class="input-group">
+                    <span class="input-group-text bg-light"><i class="bi bi-list-task"></i></span>
+                    <select id="CategoryId" name="CategoryId" class="form-select border-primary" required>
+                        <option value="" disabled selected>Kategori Seçiniz</option>
+                        @foreach (var category in ViewBag.Categories)
+                        {
+                            <option value="@category.CategoryId">@category.Category.CategoryName</option>
+                        }
+                    </select>
+                </div>
+            </div>
+
+            <!-- Yazar -->
+            <div class="col-md-6">
+                <label for="WriterId" class="form-label fw-semibold text-primary">Yazar</label>
+                <div class="input-group">
+                    <span class="input-group-text bg-light"><i class="bi bi-person-circle"></i></span>
+                    <select id="WriterId" name="WriterId" class="form-select border-primary" required>
+                        <option value="" disabled selected>Yazar Seçiniz</option>
+                        @foreach (var writer in ViewBag.Writers)
+                        {
+                            <option value="@writer.WriterId">@writer.Writer.Name</option>
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Durum -->
+        <div class="mb-4 form-check">
+            <input type="checkbox" id="Status" name="Status" class="form-check-input" value="true">
+            <label for="Status" class="form-check-label fw-semibold">Yayınla</label>
+        </div>
+
+        <!-- Butonlar -->
+        <div class="d-flex justify-content-between">
+            <button type="submit" class="btn btn-success btn-lg px-5">
+                <i class="bi bi-save"></i> Kaydet
+            </button>
+            <a href="@Url.Action("Index", "Profile", new { area = "Writer" })" class="btn btn-danger btn-lg px-5">
+                <i class="bi bi-x-circle"></i> İptal
+            </a>
+        </div>
+    </form>
+</div>
+
+
+

@@ -29,6 +29,16 @@ namespace BusinessLayer.Concrete
             return _articleDal.GetListWithCategory();
         }
 
+        public List<Article> GetBlogListWithWriter()
+        {
+            return _articleDal.GetListWithoutWriter();
+        }
+
+        public List<Article> GetListWithCategoryWithoutWriter(int id)
+        {
+            return _articleDal.GetListWithCategoryWithoutWriter(id);
+        }
+
         public void TDelete(int id)
         {
             _articleDal.Delete(id);

@@ -1,0 +1,49 @@
+﻿@model List<EntityLayer.Concrete.Article>
+@{
+    ViewData["Title"] = "BlogListByWriter";
+    Layout = "~/Views/Shared/_WriterLayout.cshtml";
+}
+
+<h1 class="text-center my-4">Yazarın Blogları</h1>
+
+<table class="table table-striped table-hover text-center">
+    <thead class="table-dark">
+        <tr>
+            <th>#</th>
+            <th>Başlık</th>
+            <th>Oluşturma Tarihi</th>
+            <th>Kategori</th>
+            <th>Durum</th>
+            <th>Sil</th>
+            <th>Düzenle</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.ArticleId</td>
+                <td>@item.Title</td>
+                <td>@item.CreateDate.ToString("dd/MM/yyyy")</td>
+                <td>@item.Category.CategoryName</td>
+                <td>@(item.Status ? "Aktif" : "Pasif")</td>
+                <td>
+                    <a href="/Blog/DeleteBlog/@item.ArticleId" class="btn btn-sm btn-danger">
+                        <i class="bi bi-trash"></i> Sil
+                    </a>
+                </td>
+                <td>
+                    <a href="/Blog/EditBlog/@item.ArticleId" class="btn btn-sm btn-warning text-white">
+                        <i class="bi bi-pencil"></i> Düzenle
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div class="text-center mt-4">
+    <a href="#" class="btn btn-lg btn-success">
+        <i class="bi bi-plus-circle"></i> Yeni Blog Ekle
+    </a>
+</div>

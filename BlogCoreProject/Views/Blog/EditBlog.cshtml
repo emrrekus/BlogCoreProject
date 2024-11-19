@@ -1,0 +1,93 @@
+﻿@model EntityLayer.Concrete.Article
+@{
+    ViewData["Title"] = "EditBlog";
+    Layout = "~/Views/Shared/_WriterLayout.cshtml";
+}
+
+<h1 class="text-center my-4 fw-bold">Blog Düzenle</h1>
+
+
+
+<div class="container bg-white p-5 rounded shadow">
+    <form asp-action="EditBlog" method="post">
+        <!-- Article Id (Hidden Field) -->
+        <input type="hidden" id="ArticleId" name="ArticleId" value="@Model.ArticleId" />
+
+        <div class="row mb-4">
+            <!-- Başlık -->
+            <div class="col-md-6">
+                <label for="Title" class="form-label fw-semibold">Başlık</label>
+                <input type="text" id="Title" name="Title" class="form-control" value="@Model.Title" placeholder="Başlık giriniz" required>
+            </div>
+
+            <!-- Oluşturma Tarihi -->
+            <div class="col-md-6">
+                <label for="CreateDate" class="form-label fw-semibold">Oluşturma Tarihi</label>
+                <input type="date" id="CreateDate" name="CreateDate" class="form-control" value="@Model.CreateDate.ToString("yyyy-MM-dd")" readonly>
+            </div>
+        </div>
+
+        <!-- İçerik -->
+        <div class="mb-4">
+            <label for="Content" class="form-label fw-semibold">İçerik</label>
+            <textarea id="Content" name="Content" class="form-control" rows="5" required>@Model.Content</textarea>
+        </div>
+
+        <div class="row mb-4">
+            <!-- Thumbnail Image -->
+            <div class="col-md-6">
+                <label for="ThumbnailImage" class="form-label fw-semibold">Küçük Resim (URL)</label>
+                <input type="text" id="ThumbnailImage" name="ThumbnailImage" class="form-control" value="@Model.ThumbnailImage" placeholder="Küçük resim URL'si giriniz">
+                <div class="mt-2">
+                    @if (!string.IsNullOrEmpty(Model.ThumbnailImage))
+                    {
+                        <img src="@Model.ThumbnailImage" alt="Küçük Resim" class="img-thumbnail" style="max-height: 150px;">
+                    }
+                </div>
+            </div>
+
+            <!-- Ana Resim -->
+            <div class="col-md-6">
+                <label for="Image" class="form-label fw-semibold">Ana Resim (URL)</label>
+                <input type="text" id="Image" name="Image" class="form-control" value="@Model.Image" placeholder="Ana resim URL'si giriniz">
+                <div class="mt-2">
+                    @if (!string.IsNullOrEmpty(Model.Image))
+                    {
+                        <img src="@Model.Image" alt="Ana Resim" class="img-thumbnail" style="max-height: 150px;">
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            <!-- Kategori -->
+            <div class="col-md-6">
+                <label for="CategoryId" class="form-label fw-semibold text-primary">Kategori</label>
+                @Html.DropDownListFor(model => model.CategoryId, (IEnumerable<SelectListItem>)ViewBag.Categories, "Kategori Seçiniz", new { @class = "form-select border-primary" })
+            </div>
+
+            <!-- Yazar -->
+            <div class="col-md-6">
+                <label for="WriterId" class="form-label fw-semibold text-primary">Yazar</label>
+                @Html.DropDownListFor(model => model.WriterId, (IEnumerable<SelectListItem>)ViewBag.Writers, "Yazar Seçiniz", new { @class = "form-select border-primary" })
+            </div>
+        </div>
+
+        <!-- Durum -->
+        <div class="mb-4 form-check">
+            <input type="checkbox" id="Status" name="Status" class="form-check-input" value="true" @(Model.Status ? "checked" : "")>
+            <label for="Status" class="form-check-label fw-semibold">Yayınla</label>
+        </div>
+
+        <!-- Butonlar -->
+        <div class="d-flex justify-content-between">
+            <button type="submit" class="btn btn-success btn-lg px-5">
+                <i class="bi bi-save"></i> Güncelle
+            </button>
+            <a href="@Url.Action("Index", "Profile", new { area = "Writer" })" class="btn btn-danger btn-lg px-5">
+                <i class="bi bi-x-circle"></i> İptal
+            </a>
+        </div>
+    </form>
+</div>
+

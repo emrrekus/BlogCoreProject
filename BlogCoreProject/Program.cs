@@ -8,14 +8,23 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// FluentValidation için dil ayarý
 ValidatorOptions.Global.LanguageManager.Culture = new System.Globalization.CultureInfo("tr");
-// Add services to the container.
-builder.Services.AddControllersWithViews();
 
+// Global AuthorizeFilter eklenmesi
+builder.Services.AddControllersWithViews(options =>
+{
+	var policy = new AuthorizationPolicyBuilder()
+		.RequireAuthenticatedUser() // Giriþ yapmýþ kullanýcý gereksinimi
+		.Build();
+	options.Filters.Add(new AuthorizeFilter(policy)); // Tüm Controller ve Action'lara uygula
+});
 
-
+// Database Context'i ekle
 builder.Services.AddDbContext<Context>();
 
+// Dependency Injection (DI) ile servislerin eklenmesi
 builder.Services.AddScoped<IAboutService, AboutManager>();
 builder.Services.AddScoped<IAboutDal, EfAboutDal>();
 builder.Services.AddScoped<IArticleService, ArticleManager>();
@@ -31,30 +40,57 @@ builder.Services.AddScoped<IWriterDal, EfWriterDal>();
 builder.Services.AddScoped<INewsLetterService, NewsLetterManager>();
 builder.Services.AddScoped<INewsLetterDal, EfNewsLetter>();
 
+builder.Services.AddSession();
 
+// Authentication ve Authorization ayarlarý
+builder.Services.AddAuthentication("CookieAuth")
+	.AddCookie("CookieAuth", options =>
+	{
+		options.LoginPath = "/Login/Index"; // Oturum açma sayfasý
+		options.AccessDeniedPath = "/ErrorPage/Error404"; // Yetkisiz eriþim sayfasý
+	});
+
+builder.Services.AddAuthorization(); // Yetkilendirme sistemi
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Hata sayfasý yönlendirmeleri
 if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
+	app.UseExceptionHandler("/Home/Error");
+	app.UseHsts();
 }
 
+// Orta katmanlarýn eklenmesi
 app.UseStatusCodePagesWithReExecute("/ErrorPage/Error404");
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+
+app.UseSession();
 
 app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+app.UseEndpoints(endpoints =>
+{
+	endpoints.MapControllerRoute(
+	  name: "default",
+	  pattern: "{controller=Blog}/{action=Index}/{id?}"
+  );
+
+	endpoints.MapControllerRoute(
+	  name: "areas",
+	  pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+	);
+});
+
+// Varsayýlan yönlendirme ayarlarý
+
 
 app.Run();
+
+
+

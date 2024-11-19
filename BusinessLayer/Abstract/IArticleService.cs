@@ -10,6 +10,10 @@ namespace BusinessLayer.Abstract
     public interface IArticleService : IGenericService<Article>
     {
         List<Article> GetBlogListWithCategory();
+        List<Article> GetBlogListWithWriter();
         List <Article> GetArticleListByWriter(int id);
+
+        List <Article> GetListWithCategoryWithoutWriter(int id);
+
     }
 }

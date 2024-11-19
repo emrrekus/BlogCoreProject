@@ -73,7 +73,7 @@
                         </div>
                         @await Html.PartialAsync("~/Views/NewsLetter/SubsMail.cshtml")
                         @await Component.InvokeAsync("CategoryList")
-                        @await Component.InvokeAsync("WriterOtherArticle")
+                        @await Component.InvokeAsync("WriterOtherArticle", new{id= Model.WriterId})
                         <div class="single-gd my-5 tech-btm">
                             <h4>Our Progress</h4>
                             <div class="progress">

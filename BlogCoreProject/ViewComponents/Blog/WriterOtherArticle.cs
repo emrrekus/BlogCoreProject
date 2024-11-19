@@ -12,9 +12,9 @@ namespace BlogCoreProject.ViewComponents.Blog
 			_articleService = articleService;
 		}
 
-		public IViewComponentResult Invoke()
+		public IViewComponentResult Invoke(int id)
 		{
-			var values = _articleService.GetArticleListByWriter(3).Take(3).ToList();
+			var values = _articleService.GetArticleListByWriter(id).OrderByDescending(x=>x.CreateDate).Take(3).ToList();
 			return View(values);
 
 		}
