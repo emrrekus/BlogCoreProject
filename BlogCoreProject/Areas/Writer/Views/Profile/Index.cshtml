@@ -1,0 +1,32 @@
+﻿@model BlogCoreProject.Areas.Writer.Models.UserEditViewModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_WriterLayout.cshtml";
+}
+
+<div class="col-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Profil Bilgilerini Düzenle</h4>
+            <form class="forms-sample" method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="exampleInputName1">Adınız</label>
+                   @Html.TextBoxFor(x=> x.Name,new {@class= "form-control"})
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputName1">Soyadınız</label>
+                    @Html.TextBoxFor(x => x.Surname, new { @class = "form-control" })
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputName1">Mail Adresi</label>
+                    @Html.TextBoxFor(x => x.Mail, new { @class = "form-control" })
+                </div>
+
+
+                <button type="submit" class="btn btn-primary mr-2">Güncelle</button>
+                <button class="btn btn-light">İptal</button>
+            </form>
+        </div>
+    </div>
+</div>
+
