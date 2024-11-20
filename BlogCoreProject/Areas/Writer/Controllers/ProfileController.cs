@@ -6,10 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 namespace BlogCoreProject.Areas.Writer.Controllers
 {
 
-	[AllowAnonymous]
+
 	[Area("Writer")]
 	[Route("Writer/[controller]/[action]")]
-	public class ProfileController : Controller
+
+    public class ProfileController : Controller
 	{
 		private readonly IWriterService _writerService;
 
@@ -20,7 +21,9 @@ namespace BlogCoreProject.Areas.Writer.Controllers
 
 		public IActionResult Index()
 		{
-			var values = _writerService.TGetById(3);
+			var value = User.Identity.Name;
+			var userId= _writerService.TGetAll().FirstOrDefault(x=> x.Mail== value);
+			var values = _writerService.TGetById(userId.WriterId);
 			UserEditViewModel viewModel = new UserEditViewModel();
 			viewModel.Name = values.Name;
 			viewModel.Surname = values.Surname;
@@ -31,7 +34,9 @@ namespace BlogCoreProject.Areas.Writer.Controllers
 		[HttpPost]
         public IActionResult Index(UserEditViewModel user)
         {
-            var values = _writerService.TGetById(3);
+            var value = User.Identity.Name;
+            var userId = _writerService.TGetAll().FirstOrDefault(x => x.Mail == value);
+            var values = _writerService.TGetById(userId.WriterId);
 
 			values.Name = user.Name;
 			values.Surname=user.Surname;
