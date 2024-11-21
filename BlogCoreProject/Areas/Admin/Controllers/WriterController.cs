@@ -1,7 +1,9 @@
 ﻿using BlogCoreProject.Areas.Admin.Models;
+using EntityLayer.Concrete;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.Security.Cryptography;
 
 namespace BlogCoreProject.Areas.Admin.Controllers
 {
@@ -27,6 +29,26 @@ namespace BlogCoreProject.Areas.Admin.Controllers
             var findWriter =  writers.FirstOrDefault(x => x.Id == wid);
             var jsonWriters = JsonConvert.SerializeObject(findWriter);
             return Json(jsonWriters);
+        }
+
+        [HttpPost]
+        public IActionResult AddWriter(WriterClass w)
+        {
+            writers.Add(w);
+            var jsonWriters = JsonConvert.SerializeObject(w);
+            return Json(jsonWriters);
+        }
+
+        public IActionResult Delete(int writerid)
+        {
+            var findWriter = writers.FirstOrDefault(x => x.Id == writerid);
+            if (findWriter == null)
+            {
+                return Json(new { success = false, message = "Yazar bulunamadı." });
+            }
+
+            writers.Remove(findWriter);
+            return Json(new { success = true, message = "Yazar başarıyla silindi." });
         }
 
 
