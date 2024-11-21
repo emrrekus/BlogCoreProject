@@ -17,5 +17,15 @@ namespace BlogCoreProject.Areas.Admin.Controllers
         {
             return PartialView();
         }
+        public PartialViewResult AdminSidePartial()
+        {
+            return PartialView();
+        }
+
+        public PartialViewResult AdminScriptPartial()
+        {
+            return PartialView();
+        }
+
     }
 }
