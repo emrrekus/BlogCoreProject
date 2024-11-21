@@ -1,0 +1,47 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Chart Example</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+</head>
+<body>
+    <div id="chartdiv" style="width: 800px; height: 600px;"></div>
+
+    <script>
+        google.charts.load('current', { 'packages': ['corechart'] });
+        google.charts.setOnLoadCallback(DrawonLoad);
+
+        function DrawonLoad() {
+            console.log("Google Charts yüklendi.");
+
+            // Örnek veri
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Category');
+            data.addColumn('number', 'Value');
+            data.addRows([
+                ['Teknoloji', 10],
+                ['Spor', 20],
+                ['Yazılım', 15],
+                ['Tekstil', 5],
+                ['Arge', 30]
+            ]);
+
+            var options = {
+                title: 'Chart Core Projesi',
+                fontSize: 16
+            };
+
+            var chart = new google.visualization.PieChart(document.getElementById('chartdiv'));
+            chart.draw(data, options);
+        }
+    </script>
+</body>
+</html>

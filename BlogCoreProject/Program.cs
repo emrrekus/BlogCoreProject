@@ -39,6 +39,8 @@ builder.Services.AddScoped<IWriterService, WriterManager>();
 builder.Services.AddScoped<IWriterDal, EfWriterDal>();
 builder.Services.AddScoped<INewsLetterService, NewsLetterManager>();
 builder.Services.AddScoped<INewsLetterDal, EfNewsLetter>();
+builder.Services.AddScoped<IAdminService, AdminManager>();
+builder.Services.AddScoped<IAdminDal, EfAdminDal>();
 
 builder.Services.AddSession();
 
