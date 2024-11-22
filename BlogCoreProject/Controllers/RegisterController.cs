@@ -1,8 +1,10 @@
-﻿using BusinessLayer.Abstract;
+﻿using BlogCoreProject.Models;
+using BusinessLayer.Abstract;
 using BusinessLayer.ValidationRules;
 using EntityLayer.Concrete;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BlogCoreProject.Controllers
@@ -10,40 +12,51 @@ namespace BlogCoreProject.Controllers
 	[AllowAnonymous]
 	public class RegisterController : Controller
 	{
-		private readonly IWriterService _writerService;
+		
 
-		public RegisterController(IWriterService writerService)
-		{
-			_writerService = writerService;
-		}
+		private readonly UserManager<AppUser> _userManager;
 
-		public IActionResult Index()
+        public RegisterController(UserManager<AppUser> userManager)
+        {
+            _userManager = userManager;
+        }
+
+        public IActionResult Index()
 		{
 			return View();
 		}
 
 		[HttpPost]
-		public ActionResult Index(Writer writer)
+		public async Task<IActionResult> Index(UserRegisterViewModel writer)
 		{
-			WriterValidator validator = new WriterValidator();	
-			ValidationResult reuslt = validator.Validate(writer);
-			if (reuslt.IsValid)
+			
+			if(ModelState.IsValid)
 			{
-                _writerService.TInsert(writer);
-                return RedirectToAction("Index", "Blog");
-
-            }
-			else
-			{
-				foreach(var item in reuslt.Errors)
+				AppUser user = new AppUser()
 				{
+					Email = writer.Mail,
+					UserName = writer.Username,
+					Name = writer.Name,
+					Surname = writer.Surname,
+					ImageUrl="abc"
 
-					ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
+				};
+				var result= await _userManager.CreateAsync(user,writer.Password);
+
+				if(result.Succeeded)
+				{
+					return RedirectToAction("Index","Login");
+				}
+				else
+				{
+					foreach(var item in result.Errors)
+					{
+						ModelState.AddModelError("",item.Description);
+					}
 				}
 			}
-			
-			return View();
-			
+			return View(writer);
 		}
+
 	}
 }

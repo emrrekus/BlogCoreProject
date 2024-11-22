@@ -1,9 +1,11 @@
 ﻿using BusinessLayer.Abstract;
 using EntityLayer.Concrete;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BlogCoreProject.Controllers
 {
+    [AllowAnonymous]
     public class NewsLetterController : Controller
     {
         private readonly INewsLetterService _newsLetterService;

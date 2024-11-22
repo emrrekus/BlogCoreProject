@@ -1,7 +1,9 @@
-﻿using BusinessLayer.Abstract;
+﻿using BlogCoreProject.Models;
+using BusinessLayer.Abstract;
 using EntityLayer.Concrete;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
@@ -11,40 +13,40 @@ namespace BlogCoreProject.Controllers
     [AllowAnonymous]
     public class LoginController : Controller
     {
-        private readonly IWriterService _writerService;
+        private readonly SignInManager<AppUser> _signInManager;
 
-		public LoginController(IWriterService writerService)
-		{
-			_writerService = writerService;
-		}
+        public LoginController(SignInManager<AppUser> signInManager)
+        {
+            _signInManager = signInManager;
+        }
 
-		public IActionResult Index()
+        public IActionResult Index()
         {
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Index(Writer writer)
+        public async Task<IActionResult> Index(UserLoginViewModel user)
         {
-            var value= _writerService.TGetAll().FirstOrDefault(x=> x.Mail==writer.Mail && x.WriterPassword==writer.WriterPassword);
-
-            if(value!=null)
+            if (ModelState.IsValid)
             {
-                var claims = new List<Claim>
-               {
-                   new Claim(ClaimTypes.Name,writer.Mail),
-               };
-                var userIdentity= new ClaimsIdentity(claims,"a");
-                ClaimsPrincipal principal= new ClaimsPrincipal(userIdentity);
-                await HttpContext.SignInAsync(principal);
-                return RedirectToAction("Index", "Dashboard", new { area = "Writer" });
+                var result = await _signInManager.PasswordSignInAsync(user.Username, user.Password, false, false);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index", "Dashboard", new { area = "Writer" });
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Hatalı kullanıcı adı veya şifre");
+                }
             }
-            else
-            {
-				return View();
-			}
+            return View();
+        }
 
-            
+        public async Task<IActionResult> LogOut()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Index", "Login");
         }
     }
 }

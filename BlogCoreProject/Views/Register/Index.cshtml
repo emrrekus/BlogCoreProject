@@ -1,4 +1,4 @@
-﻿@model EntityLayer.Concrete.Writer
+﻿@model  BlogCoreProject.Models.UserRegisterViewModel
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_BlogLayout.cshtml";
@@ -15,30 +15,46 @@
                     <div class="form-row">
                         <!-- Ad -->
                         <div class="col-md-6 mb-3">
+                          
                             <label for="validationCustom01">Ad</label>
                             <input type="text" class="form-control" name="Name" placeholder="" value="@Model?.Name">
-                            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                            <span asp-validation-for="@Model.Name" class="text-danger"></span>
                         </div>
 
                         <!-- Soyad -->
                         <div class="col-md-6 mb-3">
+                          
                             <label for="validationCustom02">Soyad</label>
                             <input type="text" class="form-control" name="Surname" placeholder="" value="@Model?.Surname">
-                            @Html.ValidationMessageFor(model => model.Surname, "", new { @class = "text-danger" })
+                            <span asp-validation-for="@Model.Surname" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                           
+                            <label for="validationCustom02">Kullanıcı Adı</label>
+                            <input type="text" class="form-control" name="Username" placeholder="" value="@Model?.Surname">
+                            <span asp-validation-for="@Model.Username" class="text-danger"></span>
                         </div>
 
                         <!-- Mail -->
                         <div class="col-md-6 mb-3">
+                          
                             <label for="validationCustom03">Mail</label>
                             <input type="email" class="form-control" name="Mail" placeholder="" value="@Model?.Mail">
-                            @Html.ValidationMessageFor(model => model.Mail, "", new { @class = "text-danger" })
+                            <span asp-validation-for="@Model.Mail" class="text-danger"></span>
                         </div>
 
                         <!-- Şifre -->
                         <div class="col-md-6 mb-3">
+                           
                             <label for="validationCustom04">Şifre</label>
-                            <input type="password" class="form-control" name="WriterPassword" placeholder="">
-                            @Html.ValidationMessageFor(model => model.WriterPassword, "", new { @class = "text-danger" })
+                            <input type="password" class="form-control" name="Password" placeholder="">
+                            <span asp-validation-for="@Model.Password" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                           
+                            <label for="validationCustom04">Şifre Tekrar</label>
+                            <input type="password" class="form-control" name="ConfirmPassword" placeholder="">
+                            <span asp-validation-for="@Model.ConfirmPassword" class="text-danger"></span>
                         </div>
                     </div>
 

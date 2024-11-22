@@ -1,0 +1,12 @@
+﻿@model BlogCoreProject.Controllers.Class1
+@{
+    ViewData["Title"] = "AddCategory";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<form method="post">
+    <label>Kategori Adı</label>
+    <input  type="text" asp-for="Name" class="form-control"/>
+    <br />
+    <button type="submit" class="btn btn-info">Ekle</button>
+</form>
+
